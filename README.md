@@ -11,7 +11,7 @@ This utility program converts the file names of items in an FTP server en masse.
 2. `shirts/12943-the-north-face-shirt_th.jpg`
 3. `shirts/12943-the-north-face-shirt.jpg`
 
-(Item file format: `<category>/<id>-<item name>-<suffix>.<file type>`()
+(Item file format: `<category>/<id>-<item name>-<suffix>.<file type>`)
 
 **When run with the program, can be changed to:**
 
