@@ -21,6 +21,11 @@ This utility program converts the file names of items in an FTP server en masse.
 
 ## How To Use
 
+### Basic Steps
+1. Run `pip install -r requirements.txt` in your terminal.
+2. Change `config.yaml` (item categories, image types) and `ftp_config.yaml` (FTP server information) if needed.
+3. Run `python main.py` in your terminal.
+
 ### Configuration Files
 #### config.yaml
 `config.yaml` is a configuration file containing the directories of item categories and various possible image types.
@@ -55,11 +60,6 @@ FTP:
   USER: foo
   PASSWORD: pass
 ```
-
-### Basic Steps
-1. Run `pip install -r requirements.txt` in your terminal.
-2. Change `config.yaml` (item categories, image types) and `ftp_config.yaml` (FTP server information) if needed.
-3. Run `python main.py` in your terminal.
 
 #### Development information, not needed for usage!
 

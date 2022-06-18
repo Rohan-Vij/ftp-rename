@@ -33,10 +33,12 @@ def parse_file_name(file_name, patterns):
 
     # If the last three characters are _th
     if file_name[-3:] == "_th":
-        item_image_type = item_image_type[-3:]  # The image type is _th
+        print("th")
+        item_image_type = file_name[-3:]  # The image type is _th
+        print(item_image_type + "\n")
         # The name does not include the last 3 characters
         item_name = "-".join(split_name[1:])[:-3]
-    if len(endings) > 0:
+    elif len(endings) > 0:
         # The image type is the longest ending
         item_image_type = max(endings, key=len)
         item_name = "-".join(split_name[1:]).replace(max(endings, key=len), '')
@@ -62,6 +64,7 @@ def rewrite_file_name(item_id, item_image_type, file_extension, original_item_na
     """
 
     new_item_name = new_item_name.replace(" ", "-").lower()
+    original_item_name = original_item_name.replace(" ", "-").lower()
 
     if item_image_type:
         return f"{item_id}-{new_item_name}{item_image_type}{file_extension}", True

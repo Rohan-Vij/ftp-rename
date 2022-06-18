@@ -127,9 +127,12 @@ class RenameFrame(ttk.Frame):
             names = []
             rewrittens = []
 
+            print(search)
             for name in reversed(search):
                 parsed = parse_file_name(name, Variables.IMAGE_PATTERNS.value)
                 rewritten = rewrite_file_name(*parsed, item_name)
+
+                print(parsed)
 
                 names.append(name)
                 parsed_names.append(parsed[-1])
@@ -141,7 +144,7 @@ class RenameFrame(ttk.Frame):
                 else:
                     try:
                         no_extension = False
-                        print(f"{parsed_names[-1]} == {parsed[-1]}")
+                        print(f"{parsed_names[-2]} == {parsed[-1]}")
                         if parsed_names[-2] == parsed[-1]:
                             print("Correct name")
                             rewritten = rewrite_file_name(*parsed[:-1], item_name, item_name)
@@ -149,7 +152,8 @@ class RenameFrame(ttk.Frame):
 
                     except IndexError:
                         print("Index Error")
-                        if len(parsed_names) == 0:
+                        print(len(parsed_names))
+                        if len(parsed_names) - 1 == 0:
                             rewritten = rewrite_file_name(*parsed[:-1], item_name, item_name)
                             no_extension = True
 
