@@ -32,8 +32,18 @@ class FTP:
     """FTP connection."""
     # pylint: disable-msg=R0903
     # --- FTP connection ---
-    host = ftputil.FTPHost(Variables.HOST.value,
-                           Variables.USER.value, Variables.PASSWORD.value)
+    def __init__(self):
+        self.host = self._connect()
+
+    def _connect(self):
+        """Connect to the FTP server."""
+        host = ftputil.FTPHost(Variables.HOST.value, Variables.USER.value,
+                               Variables.PASSWORD.value)
+        return host
+
+    def close(self):
+        """Close the FTP connection."""
+        self.host.close()
 
 
 class RenameFrame(ttk.Frame):
@@ -98,6 +108,10 @@ class RenameFrame(ttk.Frame):
     def rename(self):
         """Handle button clicking to rename files."""
 
+        # -- connecting to FTP server --
+        print("Opened FTP connection!")
+        ftp = FTP()
+
         # -- getting variables --
 
         item_category = str(self.option.get())
@@ -115,7 +129,7 @@ class RenameFrame(ttk.Frame):
             return "New item name is required"
 
         category_dir = "/" + item_category + "/"
-        search = search_names(item_id, get_files(FTP.host, category_dir))
+        search = search_names(item_id, get_files(ftp.host, category_dir))
 
         if not search:
             messagebox.showwarning("Error", "Item ID not found!")
@@ -138,7 +152,7 @@ class RenameFrame(ttk.Frame):
                 parsed_names.append(parsed[-1])
 
                 if rewritten[1]:
-                    FTP.host.rename(
+                    ftp.host.rename(
                         category_dir + name, category_dir + rewritten[0])
                     rewrittens.append(rewritten[0])
                 else:
@@ -160,7 +174,7 @@ class RenameFrame(ttk.Frame):
                     if not no_extension:
                         rewrittens.append("NOT RENAMED!!! File image type not found!")
                     else:
-                        FTP.host.rename(
+                        ftp.host.rename(
                             category_dir + name, category_dir + rewritten[0])
                         rewrittens.append(rewritten[0])
 
@@ -170,9 +184,12 @@ class RenameFrame(ttk.Frame):
 
             messagebox.showinfo("Success!", "\n".join(message))
 
+            print("Closed FTP connection!")
+            ftp.close()
             return "OK"
         except Exception as error:
             messagebox.showerror("Error", error)
+            ftp.close()
             raise error
 
 
